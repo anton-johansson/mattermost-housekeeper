@@ -28,8 +28,6 @@ func Clean(mattermostDataDirectory, databaseName, databaseUser, databasePassword
 	}
 
 	millisecondEpoch := time.Now().AddDate(0, 0, -retentionDays).UnixNano() / 1000000
-	//	millisecondEpoch = 1483602392394
-
 	if err := cleanFiles(database, millisecondEpoch, mattermostDataDirectory, fileBatchSize); err != nil {
 		return err
 	}
