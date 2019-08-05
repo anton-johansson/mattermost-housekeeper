@@ -1,4 +1,4 @@
-module github.com/anton-johansson/mattermost-maid
+module github.com/anton-johansson/mattermost-housekeeper
 
 go 1.12
 

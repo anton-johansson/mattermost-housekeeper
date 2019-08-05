@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/anton-johansson/mattermost-maid/pkg/clean"
+	"github.com/anton-johansson/mattermost-housekeeper/pkg/clean"
 	"github.com/spf13/cobra"
 )
 

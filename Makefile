@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 
-BINARY = mattermost-maid
+BINARY = mattermost-housekeeper
 REPOSITORY = github.com/anton-johansson/${BINARY}
 IMAGE = antonjohansson/${BINARY}
 VERSION = 0.0.0
@@ -30,13 +30,13 @@ test: install
 	go test ${PACKAGE_LIST}
 
 linux: install
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-linux-amd64 ./cmd/mattermost-maid
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-linux-amd64 ./cmd/mattermost-housekeeper
 
 darwin: install
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-darwin-amd64 ./cmd/mattermost-maid
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-darwin-amd64 ./cmd/mattermost-housekeeper
 
 windows: install
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-windows-amd64.exe ./cmd/mattermost-maid
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build ${LDFLAGS} -o ${OUTPUT_DIRECTORY}/${BINARY}-windows-amd64.exe ./cmd/mattermost-housekeeper
 
 build: linux darwin windows
 

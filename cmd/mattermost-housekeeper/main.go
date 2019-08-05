@@ -7,7 +7,7 @@ import (
 )
 
 var rootCommand = &cobra.Command{
-	Use:   "mattermost-maid",
+	Use:   "mattermost-housekeeper",
 	Short: "A tool for removing old posts in Mattermost Team Edition",
 }
 

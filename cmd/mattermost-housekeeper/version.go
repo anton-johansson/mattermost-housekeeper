@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/anton-johansson/mattermost-maid/pkg/version"
+	"github.com/anton-johansson/mattermost-housekeeper/pkg/version"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ func init() {
 			if short {
 				fmt.Println(info.Version)
 			} else {
-				fmt.Println("mattermost-maid " + info.Version)
+				fmt.Println("mattermost-housekeeper " + info.Version)
 				fmt.Println("go version: " + info.GoVersion)
 				fmt.Println("commit: " + info.Commit)
 				fmt.Println("build date: " + info.BuildDate)
