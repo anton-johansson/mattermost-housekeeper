@@ -1,5 +1,7 @@
 # Mattermost housekeeper
 
+[![CircleCI](https://img.shields.io/circleci/build/gh/anton-johansson/mattermost-housekeeper?style=for-the-badge)](https://circleci.com/gh/anton-johansson/workflows/mattermost-housekeeper)
+
 Mattermost Entpriese Edition provides a tool for retention policies that makes sure that older posts and attachments are automatically removed after a set period of time, to keep the disk usage low. Mattermost Team Edition does not have this utility and this tool is a workaround for that.
 
 
