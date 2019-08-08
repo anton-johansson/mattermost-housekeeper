@@ -7,7 +7,7 @@ executors:
       - image: antonjohansson/ci-make-docker:18.09.5
   golang:
     docker:
-      image: circleci/golang:1.12
+      - image: circleci/golang:1.12
 jobs:
   install:
     executor: golang
