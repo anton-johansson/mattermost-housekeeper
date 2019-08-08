@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 	"time"
@@ -134,8 +135,9 @@ func removeFiles(mattermostDataDirectory string, filePaths ...string) error {
 
 func removeFile(mattermostDataDirectory, filePath string) error {
 	if len(filePath) > 0 {
-		fmt.Println("Removing file from disk:", filePath)
+		log.Info("Removing file from disk:", filePath)
 		if true {
+			// TODO: remove this if
 			return nil
 		}
 		fullPath := filepath.Join(mattermostDataDirectory, filePath)
@@ -160,7 +162,7 @@ func deleteFileInfoRows(database *sql.DB, millisecondEpoch int64) error {
 		return err
 	}
 
-	fmt.Println("Removed", rows, "file information rows")
+	log.Info("Removed", rows, "file information rows")
 	return nil
 }
 
@@ -180,6 +182,6 @@ func deletePostRows(database *sql.DB, millisecondEpoch int64) error {
 		return err
 	}
 
-	fmt.Println("Removed", rows, "post rows")
+	log.Info("Removed", rows, "post rows")
 	return nil
 }
