@@ -41,7 +41,15 @@ windows: install
 build: linux darwin windows
 
 docker:
-	docker build -t ${IMAGE}:${VERSION} .
+	docker build -t ${IMAGE} .
+
+docker-archive:
+	docker save -o image.tar ${IMAGE}
+
+docker-push:
+	echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+	docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${VERSION}
+	docker push ${IMAGE_NAME}:${VERSION}
 
 clean:
 	rm -rf ${OUTPUT_DIRECTORY}

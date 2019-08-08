@@ -1,42 +1,86 @@
-version: 2
+version: 2.1
+executors:
+  docker-builder:
+    environment:
+      IMAGE_NAME: antonjohansson/mattermost-housekeeper
+    docker:
+      - image: antonjohansson/ci-make-docker:18.09.5
+  golang:
+    docker:
+      image: circleci/golang:1.12
 jobs:
   install:
-    docker:
-      - image: circleci/golang:1.12
+    executor: golang
     steps:
       - checkout
       - run: make install
   test:
-    docker:
-      - image: circleci/golang:1.12
+    executor: golang
     steps:
       - checkout
       - run: make vet
       - run: make test
   build:
-    docker:
-      - image: circleci/golang:1.12
+    executor: golang
     steps:
       - checkout
       - run: make build
-  docker:
-    docker:
-      - image: docker:18.09.5-git
+  build-docker-image:
+    executor: docker-builder
     steps:
       - checkout
       - setup_remote_docker
       - run: make docker
+      - run: make docker-archive
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  push-docker-image:
+    executor: docker-builder
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run: make docker-push
+      - run:
+          name: Publish Docker image to Docker Hub
+          command: |
+            echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+            docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${CIRCLE_TAG}
+            docker push ${IMAGE_NAME}:${CIRCLE_TAG}
 workflows:
   version: 2
   Pipeline:
     jobs:
-      - install
+      - install:
+          filters:
+            tags:
+              only: /.*/
       - test:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - install
-      - docker:
+          filters:
+            tags:
+              only: /.*/
+      - build-docker-image:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
+      - push-docker-image:
+          requires:
+            - test
+            - build-docker-image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
